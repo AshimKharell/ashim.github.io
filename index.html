@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
 
@@ -41,7 +42,6 @@
             <div class="home-content">
                 <div class="text-1">Hello, programmers!!</div>
                 <div class="text-3">I'm a <span class="typing"></span></div>
-                <a href="#">Hire me</a>
             </div>
         </div>
     </section>
@@ -227,14 +227,15 @@
                         <div class="row">
                             <i class="fab fa-linkedin"></i>
                             <div class="info">
-                                <div class="sub-title"> <a href="https://www.linkedin.com/in/ashim-kharel-44b270284/">View LinkedIn</a></div>
+                                <div class="sub-title"> <a href="https://www.linkedin.com/in/ashim-kharel-44b270284/">LinkedIn</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
+<!-- contact form -->
                 <div class="column right">
                     <div class="text">Message me</div>
-                    <form action="#">
+                    <form id="contact-form">
                         <div class="fields">
                             <div class="field name">
                                 <input type="text" placeholder="Name" required>
@@ -253,11 +254,40 @@
                             <button type="submit">Send message</button>
                         </div>
                     </form>
+                    <script>
+                        document.getElementById('contact-form').addEventListener('submit', function(event) {
+                            event.preventDefault(); // Prevent the form from submitting normally
+                    
+                            // Collect form data
+                            var templateParams = {
+                                to_name: "Ashim Kharel", // Replace with your name
+                                from_name: document.querySelector('.field.name input').value,
+                                from_email: document.querySelector('.field.email input').value,
+                                subject: document.querySelector('.field input[type="text"]').value,
+                                message: document.querySelector('.field.textarea textarea').value
+                            };
+                    
+                            // Send email
+                            emailjs.send('service_w1veehs', 'template_rp8w15b', templateParams)
+                             .then(function(response) {
+                                    console.log('SUCCESS!', response.status, response.text);
+                                    alert('Message sent successfully!');
+                                }, function(error) {
+                                    console.log('FAILED...', error);
+                                    alert('Failed to send message');
+                                });
+                        });
+                    </script>
                 </div>
             </div>
         </div>
     </section>
 
     <script src="script.js"></script>
+    <script>
+        (function(){
+            emailjs.init("wnRystdMG_4ln6Cg2");
+        })();
+    </script>
 </body>
 </html>
